@@ -1,7 +1,16 @@
+import Header from "./shared/ui/Header";
+import Layout from "./shared/ui/Layout";
+import ProductList from "./features/products/ui/ProductGrid";
+
 function App() {
   return (
-    <h1>E-Commerce App</h1>
-  );
+    <>
+      <Header />
+      <Layout>
+        <ProductList />
+      </Layout>
+    </>
+  )
 }
 
 export default App;

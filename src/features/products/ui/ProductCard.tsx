@@ -1,16 +1,13 @@
-function ProductCard() {
-    return (
+type Props = {
+    product: any;
+};
+
+function ProductCard({ product }: Props) {
+    return(
         <div>
-            <img
-        src="https://via.placeholder.com/150"
-        alt="product"
-      />
-
-      <h3>iPhone 16</h3>
-
-      <p>$999.99</p>
-
-      <button>Add to Cart</button>
+            <img src={product.image} alt={product.name} />
+            <h3>{product.title}</h3>
+            <p>${product.price}</p>
         </div>
     );
 }

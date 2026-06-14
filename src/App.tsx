@@ -21,7 +21,7 @@ function App() {
     <h2>Products: {products.length}</h2>
       <Header />
       <Layout>
-        <ProductList />
+        <ProductList products={products} />
       </Layout>
     </>
   )

@@ -1,13 +1,16 @@
 import ProductCard from "./ProductCard";
 
-function ProductGrid() {
+type Props = {
+    products: any[];
+};
+
+function ProductGrid({ products }: Props) {
   return (
-    <div>
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-    </div>
+    <>
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </>
   );
 }
 

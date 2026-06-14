@@ -4,11 +4,19 @@ type Props = {
 
 function ProductCard({ product }: Props) {
     return(
-        <div>
-            <img src={product.image} alt={product.name} />
-            <h3>{product.title}</h3>
-            <p>${product.price}</p>
-        </div>
+        <a href={`/product/${product.id}`}>
+  <div>
+    <img
+      src={product.image}
+      alt={product.title}
+      width="150"
+    />
+
+    <h3>{product.title}</h3>
+
+    <p>${product.price}</p>
+  </div>
+</a>
     );
 }
 

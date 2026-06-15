@@ -1,10 +1,15 @@
+import { Link } from "react-router-dom";
+
 type Props = {
     product: any;
+    addToCart: (product: any) => void;
 };
 
-function ProductCard({ product }: Props) {
+function ProductCard({ product, addToCart }: Props) {
     return(
-        <a href={`/product/${product.id}`}>
+        <Link
+  to={`/product/${product.id}`}
+>
   <div>
     <img
       src={product.image}
@@ -15,8 +20,13 @@ function ProductCard({ product }: Props) {
     <h3>{product.title}</h3>
 
     <p>${product.price}</p>
+    <button
+  onClick={() => addToCart(product)}
+>
+  Add To Cart
+</button>
   </div>
-</a>
+</Link>
     );
 }
 

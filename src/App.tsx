@@ -14,6 +14,35 @@ import {
 function App() {
   const [products, setProducts] = useState([]);
 
+  const [cart, setCart] = useState<any[]>([]);
+
+  function addToCart(product: any) {
+  const existingProduct = cart.find(
+    item => item.id === product.id
+  );
+
+  if (existingProduct) {
+    setCart(
+      cart.map(item =>
+        item.id === product.id
+          ? {
+              ...item,
+              quantity: item.quantity + 1
+            }
+          : item
+      )
+    );
+  } else {
+    setCart([
+      ...cart,
+      {
+        ...product,
+        quantity: 1
+      }
+    ]);
+  }
+}
+
   useEffect(() => {
     async function loadProducts() {
       const data = await getProducts();
@@ -23,13 +52,21 @@ function App() {
     loadProducts();
   }, []);
 
+  
+
   return (
     <>
     <BrowserRouter>
   <Routes>
     <Route
       path="/"
-      element={<HomePage />}
+      element={
+        <HomePage
+          products={products}
+          addToCart={addToCart}
+          cartCount={cart.length}
+        />
+      }
     />
 
     <Route
@@ -38,12 +75,6 @@ function App() {
     />
   </Routes>
 </BrowserRouter>
-
-    <h2>Products: {products.length}</h2>
-      <Header />
-      <Layout>
-        <ProductList products={products} />
-      </Layout>
     </>
   )
 }

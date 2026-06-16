@@ -1,7 +1,11 @@
+import { Link } from "react-router-dom";
+
 function Header() {
     return (
         <header>
-            <h1>🛒 E-Commerce Store</h1>
+            <Link to="/cart">
+  Cart
+</Link>
         </header>
     );
 }

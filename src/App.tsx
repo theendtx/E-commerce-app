@@ -1,10 +1,9 @@
-import Header from "./shared/ui/Header";
-import Layout from "./shared/ui/Layout";
-import ProductList from "./features/products/ui/ProductGrid";
+
 import { getProducts } from "./shared/api/productApi";
 import { useEffect, useState } from "react";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import HomePage from "./pages/HomePage";
+import CartPage from "./pages/CartPage";
 import {
   BrowserRouter,
   Routes,
@@ -43,6 +42,41 @@ function App() {
   }
 }
 
+function increaseQuantity(id: number) {
+  setCart(
+    cart.map(item => 
+      item.id === id
+      ? {
+        ...item,
+        quantity: item.quantity + 1
+      
+      }
+      : item
+    )
+  );
+}
+
+function decreaseQuantity(id: number) {
+  setCart(
+    cart
+      .map(item =>
+        item.id === id
+          ? {
+              ...item,
+              quantity: item.quantity - 1
+            }
+          : item
+      )
+      .filter(item => item.quantity > 0)
+  );
+}
+
+function removeFromCart(id: number) {
+  setCart(
+    cart.filter(item => item.id !== id)
+  );
+}
+
   useEffect(() => {
     async function loadProducts() {
       const data = await getProducts();
@@ -72,6 +106,16 @@ function App() {
     <Route
       path="/product/:id"
       element={<ProductDetailsPage />}
+    />
+
+    <Route
+      path="/cart"
+      element={<CartPage 
+        cart={cart}
+        increaseQuantity={increaseQuantity}
+        decreaseQuantity={decreaseQuantity}
+        removeFromCart={removeFromCart}
+      />}
     />
   </Routes>
 </BrowserRouter>

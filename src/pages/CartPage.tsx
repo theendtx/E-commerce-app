@@ -6,9 +6,17 @@ type Props = {
 };
 
 function CartPage({ cart, increaseQuantity, decreaseQuantity, removeFromCart }: Props) {
+
+  const totalPrice = cart.reduce(
+    (total, item) => 
+      total + item.price * item.quantity, 0
+  );
+
     return (
         <>
         <h1>Shopping Cart</h1>
+
+        <h2>Total: ${totalPrice}</h2>
 
         {cart.map(item => (
             <div key={item.id}>

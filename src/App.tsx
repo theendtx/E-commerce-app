@@ -15,6 +15,7 @@ function App() {
 
   const [cart, setCart] = useState<any[]>([]);
 
+  
   function addToCart(product: any) {
   const existingProduct = cart.find(
     item => item.id === product.id
@@ -107,6 +108,7 @@ function removeFromCart(id: number) {
       path="/product/:id"
       element={<ProductDetailsPage />}
     />
+    
 
     <Route
       path="/cart"

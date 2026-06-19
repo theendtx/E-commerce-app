@@ -8,9 +8,11 @@ type Props = {
   cartCount: number;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
 };
 
-function HomePage({ products, addToCart, cartCount, searchTerm, setSearchTerm }: Props) {
+function HomePage({ products, addToCart, cartCount, searchTerm, setSearchTerm, selectedCategory, setSelectedCategory }: Props) {
   return (
     <>
     <h2>Products: {products.length}</h2>
@@ -23,6 +25,51 @@ function HomePage({ products, addToCart, cartCount, searchTerm, setSearchTerm }:
     onChange={e => setSearchTerm(e.target.value)}
     />
 
+    <p>Selected category: {selectedCategory}</p>
+
+    {
+  products.length === 0 && (
+    <h2>No products found</h2>
+  )
+}
+
+    <button
+  onClick={() => setSelectedCategory("all")}
+>
+  All
+</button>
+
+<button
+  onClick={() =>
+    setSelectedCategory("electronics")
+  }
+>
+  Electronics
+</button>
+
+<button
+  onClick={() =>
+    setSelectedCategory("jewelery")
+  }
+>
+  Jewelery
+</button>
+
+<button
+  onClick={() =>
+    setSelectedCategory("men's clothing")
+  }
+>
+  Men's Clothing
+</button>
+
+<button
+  onClick={() =>
+    setSelectedCategory("women's clothing")
+  }
+>
+  Women's Clothing
+</button>
     <Header />
     <Layout>
       <ProductsList 

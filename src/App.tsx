@@ -15,14 +15,21 @@ function App() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredProducts =
-  products.filter(product =>
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  const categoryFilteredProducts = selectedCategory === "all"
+  ? products
+  : products.filter(
+      product =>
+        product.category === selectedCategory
+  )
+
+  const filteredProducts = categoryFilteredProducts.filter(product =>
     product.title
       .toLowerCase()
       .includes(
         searchTerm.toLowerCase()
       )
-      
   );
 
   const [cart, setCart] = useState<any[]>([]);
@@ -109,12 +116,14 @@ function removeFromCart(id: number) {
       path="/"
       element={
         <HomePage
-          products={filteredProducts}
-          addToCart={addToCart}
-          cartCount={cart.length}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
+  products={filteredProducts}
+  addToCart={addToCart}
+  cartCount={cart.length}
+  searchTerm={searchTerm}
+  setSearchTerm={setSearchTerm}
+  selectedCategory={selectedCategory}
+  setSelectedCategory={setSelectedCategory}
+/>
       }
     />
 

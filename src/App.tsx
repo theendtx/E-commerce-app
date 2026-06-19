@@ -11,7 +11,19 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [products, setProducts] = useState([]);
+ const [products, setProducts] = useState<any[]>([]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredProducts =
+  products.filter(product =>
+    product.title
+      .toLowerCase()
+      .includes(
+        searchTerm.toLowerCase()
+      )
+      
+  );
 
   const [cart, setCart] = useState<any[]>([]);
 
@@ -97,9 +109,11 @@ function removeFromCart(id: number) {
       path="/"
       element={
         <HomePage
-          products={products}
+          products={filteredProducts}
           addToCart={addToCart}
           cartCount={cart.length}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
         />
       }
     />
@@ -108,6 +122,8 @@ function removeFromCart(id: number) {
       path="/product/:id"
       element={<ProductDetailsPage />}
     />
+
+    
     
 
     <Route
@@ -120,6 +136,8 @@ function removeFromCart(id: number) {
       />}
     />
   </Routes>
+
+  
 </BrowserRouter>
     </>
   )

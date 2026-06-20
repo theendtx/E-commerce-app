@@ -17,6 +17,8 @@ function App() {
 
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  
+
   const categoryFilteredProducts = selectedCategory === "all"
   ? products
   : products.filter(
@@ -31,6 +33,25 @@ function App() {
         searchTerm.toLowerCase()
       )
   );
+
+  const sortedProducts = [...filteredProducts];
+
+
+  const [sortOrder, setSortOrder] = useState("default");
+
+  if (sortOrder === "asc") {
+  sortedProducts.sort(
+    (a: any, b: any) =>
+      a.price - b.price
+  );
+}
+
+if (sortOrder === "desc") {
+  sortedProducts.sort(
+    (a: any, b: any) =>
+      b.price - a.price
+  );
+}
 
   const [cart, setCart] = useState<any[]>([]);
 
@@ -116,13 +137,15 @@ function removeFromCart(id: number) {
       path="/"
       element={
         <HomePage
-  products={filteredProducts}
+  products={sortedProducts}
   addToCart={addToCart}
   cartCount={cart.length}
   searchTerm={searchTerm}
   setSearchTerm={setSearchTerm}
   selectedCategory={selectedCategory}
   setSelectedCategory={setSelectedCategory}
+  sortOrder={sortOrder}
+  setSortOrder={setSortOrder}
 />
       }
     />

@@ -10,9 +10,11 @@ type Props = {
   setSearchTerm: (term: string) => void;
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
+  sortOrder: string;
+  setSortOrder: (order: string) => void;
 };
 
-function HomePage({ products, addToCart, cartCount, searchTerm, setSearchTerm, selectedCategory, setSelectedCategory }: Props) {
+function HomePage({ products, addToCart, cartCount, searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, setSortOrder }: Props) {
   return (
     <>
     <h2>Products: {products.length}</h2>
@@ -32,6 +34,22 @@ function HomePage({ products, addToCart, cartCount, searchTerm, setSearchTerm, s
     <h2>No products found</h2>
   )
 }
+
+<button
+  onClick={() =>
+    setSortOrder("asc")
+  }
+>
+  Price ↑
+</button>
+
+<button
+  onClick={() =>
+    setSortOrder("desc")
+  }
+>
+  Price ↓
+</button>
 
     <button
   onClick={() => setSelectedCategory("all")}

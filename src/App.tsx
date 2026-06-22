@@ -1,12 +1,13 @@
 
 import { getProducts } from "./shared/api/productApi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import type { Product } from "./shared/types/Product";
 import { useCartStore } from "./store/cartStore";
+import { useQuery } from "@tanstack/react-query";
 import {
   BrowserRouter,
   Routes,
@@ -14,7 +15,15 @@ import {
 } from "react-router-dom";
 
 function App() {
- const [products, setProducts] = useState<Product[]>([]);
+
+  const {
+  data: products = [],
+  isLoading,
+  error
+} = useQuery<Product[], Error>({
+  queryKey: ["products"],
+  queryFn: getProducts
+});
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -56,6 +65,8 @@ if (sortOrder === "desc") {
   );
 }
 
+
+
   const {
   cart,
   addToCart,
@@ -64,15 +75,13 @@ if (sortOrder === "desc") {
   removeFromCart
 } = useCartStore();
 
-  
-useEffect(() => {
-  async function loadProducts() {
-    const data = await getProducts();
-    setProducts(data);
-  }
+if (isLoading) {
+  return <h1>Loading...</h1>;
+}
 
-  loadProducts();
-}, []);
+if (error) {
+  return <h1>Error loading products</h1>;
+}
   return (
     <>
     <BrowserRouter>

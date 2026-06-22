@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import type { Product } from "./shared/types/Product";
-import type { CartItem } from "./shared/types/CartItem";
+import { useCartStore } from "./store/cartStore";
 import {
   BrowserRouter,
   Routes,
@@ -56,82 +56,23 @@ if (sortOrder === "desc") {
   );
 }
 
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const {
+  cart,
+  addToCart,
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart
+} = useCartStore();
 
   
-  function addToCart(product: Product) {
-  const existingProduct = cart.find(
-    item => item.id === product.id
-  );
-
-  if (existingProduct) {
-    setCart(
-      cart.map(item =>
-        item.id === product.id
-          ? {
-              ...item,
-              quantity: item.quantity + 1
-            }
-          : item
-      )
-    );
-  } else {
-    setCart([
-      ...cart,
-      {
-        ...product,
-        quantity: 1
-      }
-    ]);
+useEffect(() => {
+  async function loadProducts() {
+    const data = await getProducts();
+    setProducts(data);
   }
-}
 
-function increaseQuantity(id: number) {
-  setCart(
-    cart.map(item => 
-      item.id === id
-      ? {
-        ...item,
-        quantity: item.quantity + 1
-      
-      }
-      : item
-    )
-  );
-}
-
-function decreaseQuantity(id: number) {
-  setCart(
-    cart
-      .map(item =>
-        item.id === id
-          ? {
-              ...item,
-              quantity: item.quantity - 1
-            }
-          : item
-      )
-      .filter(item => item.quantity > 0)
-  );
-}
-
-function removeFromCart(id: number) {
-  setCart(
-    cart.filter(item => item.id !== id)
-  );
-}
-
-  useEffect(() => {
-    async function loadProducts() {
-      const data = await getProducts();
-      setProducts(data);
-    }
-    
-    loadProducts();
-  }, []);
-
-  
-
+  loadProducts();
+}, []);
   return (
     <>
     <BrowserRouter>

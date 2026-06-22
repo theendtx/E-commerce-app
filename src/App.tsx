@@ -5,6 +5,8 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import type { Product } from "./shared/types/Product";
+import type { CartItem } from "./shared/types/CartItem";
 import {
   BrowserRouter,
   Routes,
@@ -12,7 +14,7 @@ import {
 } from "react-router-dom";
 
 function App() {
- const [products, setProducts] = useState<any[]>([]);
+ const [products, setProducts] = useState<Product[]>([]);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -42,22 +44,22 @@ function App() {
 
   if (sortOrder === "asc") {
   sortedProducts.sort(
-    (a: any, b: any) =>
+    (a: Product, b: Product) =>
       a.price - b.price
   );
 }
 
 if (sortOrder === "desc") {
   sortedProducts.sort(
-    (a: any, b: any) =>
+    (a: Product, b: Product) =>
       b.price - a.price
   );
 }
 
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   
-  function addToCart(product: any) {
+  function addToCart(product: Product) {
   const existingProduct = cart.find(
     item => item.id === product.id
   );

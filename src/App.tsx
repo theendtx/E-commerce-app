@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
+import FavoritesPage from "./pages/FavoritesPage";
 import {
   BrowserRouter,
   Routes,
@@ -155,9 +156,11 @@ function removeFromCart(id: number) {
       element={<ProductDetailsPage />}
     />
 
-    
-    
-
+    <Route
+      path="/favorites"
+      element={<FavoritesPage />}
+      />
+      
     <Route
       path="/cart"
       element={<CartPage 

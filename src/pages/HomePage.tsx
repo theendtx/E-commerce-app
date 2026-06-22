@@ -1,6 +1,7 @@
 import Header from "../shared/ui/Header";
 import Layout from "../shared/ui/Layout";
 import ProductsList from "../features/products/ui/ProductGrid";
+import { Link } from "react-router";
 
 type Props = {
   products: any[];
@@ -88,6 +89,9 @@ function HomePage({ products, addToCart, cartCount, searchTerm, setSearchTerm, s
 >
   Women's Clothing
 </button>
+
+<Link to="/favorites">Favorites</Link>
+
     <Header />
     <Layout>
       <ProductsList 

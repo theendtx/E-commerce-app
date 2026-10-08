@@ -1,11 +1,11 @@
+import ProductGrid from "../features/products/ui/ProductGrid";
 import Header from "../shared/ui/Header";
 import Layout from "../shared/ui/Layout";
-import ProductsList from "../features/products/ui/ProductGrid";
-import { Link } from "react-router";
+import type { Product } from "../shared/types/Product";
 
 type Props = {
-  products: any[];
-  addToCart: (product: any) => void;
+  products: Product[];
+  addToCart: (product: Product) => void;
   cartCount: number;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
@@ -15,92 +15,85 @@ type Props = {
   setSortOrder: (order: string) => void;
 };
 
-function HomePage({ products, addToCart, cartCount, searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, setSortOrder }: Props) {
+const categories = [
+  { label: "All", value: "all" },
+  { label: "Electronics", value: "electronics" },
+  { label: "Jewelery", value: "jewelery" },
+  { label: "Men's Clothing", value: "men's clothing" },
+  { label: "Women's Clothing", value: "women's clothing" }
+];
+
+function HomePage({
+  products,
+  addToCart,
+  cartCount,
+  searchTerm,
+  setSearchTerm,
+  selectedCategory,
+  setSelectedCategory,
+  sortOrder,
+  setSortOrder
+}: Props) {
   return (
     <>
-    <h2>Products: {products.length}</h2>
-    <h2>Cart: {cartCount}</h2>
+      <Header cartCount={cartCount} />
 
-    <input
-    type="text"
-    placeholder="Search products..."
-    value={searchTerm}
-    onChange={e => setSearchTerm(e.target.value)}
-    />
+      <Layout>
+        <section className="shop-toolbar">
+          <div>
+            <p className="eyebrow">Catalog</p>
+            <h1>Products</h1>
+            <p className="muted">
+              {products.length} items found · Cart {cartCount}
+            </p>
+          </div>
 
-    <p>Selected category: {selectedCategory}</p>
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+        </section>
 
-    {
-  products.length === 0 && (
-    <h2>No products found</h2>
-  )
-}
+        <section className="filter-bar">
+          <button
+            className={sortOrder === "asc" ? "active" : ""}
+            onClick={() => setSortOrder("asc")}
+          >
+            Price up
+          </button>
 
-<button
-  onClick={() =>
-    setSortOrder("asc")
-  }
->
-  Price ↑
-</button>
+          <button
+            className={sortOrder === "desc" ? "active" : ""}
+            onClick={() => setSortOrder("desc")}
+          >
+            Price down
+          </button>
 
-<button
-  onClick={() =>
-    setSortOrder("desc")
-  }
->
-  Price ↓
-</button>
+          {categories.map((category) => (
+            <button
+              className={
+                selectedCategory === category.value ? "active" : ""
+              }
+              key={category.value}
+              onClick={() => setSelectedCategory(category.value)}
+            >
+              {category.label}
+            </button>
+          ))}
+        </section>
 
-    <button
-  onClick={() => setSelectedCategory("all")}
->
-  All
-</button>
-
-<button
-  onClick={() =>
-    setSelectedCategory("electronics")
-  }
->
-  Electronics
-</button>
-
-<button
-  onClick={() =>
-    setSelectedCategory("jewelery")
-  }
->
-  Jewelery
-</button>
-
-<button
-  onClick={() =>
-    setSelectedCategory("men's clothing")
-  }
->
-  Men's Clothing
-</button>
-
-<button
-  onClick={() =>
-    setSelectedCategory("women's clothing")
-  }
->
-  Women's Clothing
-</button>
-
-<Link to="/favorites">Favorites</Link>
-
-    <Header />
-    <Layout>
-      <ProductsList 
-        products={products}
-        addToCart={addToCart}
-      />
-    </Layout>
+        {products.length === 0 ? (
+          <section className="empty-state">
+            <h2>No products found</h2>
+          </section>
+        ) : (
+          <ProductGrid products={products} addToCart={addToCart} />
+        )}
+      </Layout>
     </>
-  )
+  );
 }
 
 export default HomePage;

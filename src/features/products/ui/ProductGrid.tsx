@@ -1,15 +1,16 @@
+import type { Product } from "../../../shared/types/Product";
 import ProductCard from "./ProductCard";
 
 type Props = {
-    products: any[];
-    addToCart?: (product: any) => void;
+  products: Product[];
+  addToCart?: (product: Product) => void;
 };
 
 function ProductGrid({ products, addToCart }: Props) {
   const handleAdd = addToCart ?? (() => {});
 
   return (
-    <>
+    <section className="product-grid">
       {products.map((product) => (
         <ProductCard
           key={product.id}
@@ -17,7 +18,7 @@ function ProductGrid({ products, addToCart }: Props) {
           addToCart={handleAdd}
         />
       ))}
-    </>
+    </section>
   );
 }
 

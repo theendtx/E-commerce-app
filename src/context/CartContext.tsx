@@ -1,18 +1,15 @@
-import { createContext, useContext } from "react";
+import { createContext, type ReactNode } from "react";
 
-interface CartContextValue {
-}
+type CartContextValue = object;
 
 const CartContext = createContext<CartContextValue>({});
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
-    return (
-        <CartContext.Provider value={{}}>
-            {children}
-        </CartContext.Provider>
-    );
+function CartProvider({ children }: { children: ReactNode }) {
+  return (
+    <CartContext.Provider value={{}}>
+      {children}
+    </CartContext.Provider>
+  );
 }
 
-export function useCart() {
-    return useContext(CartContext);
-}
+export default CartProvider;

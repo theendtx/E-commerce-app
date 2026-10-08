@@ -1,56 +1,83 @@
+import { Link } from "react-router-dom";
+
+import type { CartItem } from "../shared/types/CartItem";
+import Header from "../shared/ui/Header";
+
 type Props = {
-    cart: any[];
-    increaseQuantity: (id: number) => void;
-    decreaseQuantity: (id: number) => void;
-    removeFromCart: (id: number) => void;
+  cart: CartItem[];
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
+  removeFromCart: (id: number) => void;
 };
 
-function CartPage({ cart, increaseQuantity, decreaseQuantity, removeFromCart }: Props) {
-
+function CartPage({
+  cart,
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart
+}: Props) {
   const totalPrice = cart.reduce(
-    (total, item) => 
-      total + item.price * item.quantity, 0
+    (total, item) => total + item.price * item.quantity,
+    0
   );
 
-    return (
+  return (
+    <>
+    <Header cartCount={cart.length} />
+    <main className="page-shell">
+      <section className="cart-header">
+        <div>
+          <p className="eyebrow">Cart</p>
+          <h1>Shopping Cart</h1>
+        </div>
+
+        <h2>Total: ${totalPrice.toFixed(2)}</h2>
+      </section>
+
+      {cart.length === 0 ? (
+        <section className="empty-state">
+          <h2>Your cart is empty</h2>
+          <Link className="primary-button" to="/">
+            Continue shopping
+          </Link>
+        </section>
+      ) : (
         <>
-        <h1>Shopping Cart</h1>
+          <section className="cart-list">
+            {cart.map((item) => (
+              <article className="cart-item" key={item.id}>
+                <img src={item.image} alt={item.title} />
 
-        <h2>Total: ${totalPrice}</h2>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>Quantity: {item.quantity}</p>
+                </div>
 
-        {cart.map(item => (
-            <div key={item.id}>
-  <h3>{item.title}</h3>
+                <div className="quantity-actions">
+                  <button onClick={() => increaseQuantity(item.id)}>
+                    +
+                  </button>
 
-  <p>Quantity: {item.quantity}</p>
+                  <button onClick={() => decreaseQuantity(item.id)}>
+                    -
+                  </button>
 
-  <button
-    onClick={() =>
-      increaseQuantity(item.id)
-    }
-  >
-    +
-  </button>
+                  <button onClick={() => removeFromCart(item.id)}>
+                    Delete
+                  </button>
+                </div>
+              </article>
+            ))}
+          </section>
 
-  <button
-    onClick={() =>
-      decreaseQuantity(item.id)
-    }
-  >
-    -
-  </button>
-
-  <button
-    onClick={() =>
-      removeFromCart(item.id)
-    }
-  >
-    Delete
-  </button>
-</div>
-        ))}
+          <Link className="primary-button checkout-button" to="/checkout">
+            Checkout
+          </Link>
         </>
-    )
+      )}
+    </main>
+    </>
+  );
 }
 
 export default CartPage;

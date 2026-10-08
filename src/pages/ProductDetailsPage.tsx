@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { getProduct } from "../shared/api/productApi";
+import Header from "../shared/ui/Header";
+import type { Product } from "../shared/types/Product";
 
 function ProductDetailsPage() {
   const { id } = useParams();
-
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     async function loadProduct() {
@@ -19,22 +20,28 @@ function ProductDetailsPage() {
   }, [id]);
 
   if (!product) {
-    return <h2>Loading...</h2>;
+    return <h2 className="status-message">Loading...</h2>;
   }
 
   return (
     <>
-      <img
-        src={product.image}
-        alt={product.title}
-        width="200"
-      />
+    <Header />
+    <main className="page-shell">
+      <Link className="text-link" to="/">
+        Back to shop
+      </Link>
 
-      <h2>{product.title}</h2>
+      <section className="product-details">
+        <img src={product.image} alt={product.title} />
 
-      <p>{product.description}</p>
-
-      <h3>${product.price}</h3>
+        <div>
+          <p className="eyebrow">{product.category}</p>
+          <h1>{product.title}</h1>
+          <p>{product.description}</p>
+          <h2>${product.price.toFixed(2)}</h2>
+        </div>
+      </section>
+    </main>
     </>
   );
 }

@@ -1,15 +1,11 @@
+import type { ReactNode } from "react";
+
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-function Layout({
-  children
-}: Props) {
-  return (
-    <main>
-      {children}
-    </main>
-  );
+function Layout({ children }: Props) {
+  return <main className="page-shell">{children}</main>;
 }
 
 export default Layout;

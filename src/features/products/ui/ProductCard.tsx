@@ -1,33 +1,31 @@
 import { Link } from "react-router-dom";
 
+import type { Product } from "../../../shared/types/Product";
+
 type Props = {
-    product: any;
-    addToCart: (product: any) => void;
+  product: Product;
+  addToCart: (product: Product) => void;
 };
 
 function ProductCard({ product, addToCart }: Props) {
-    return(
-        <Link
-  to={`/product/${product.id}`}
->
-  <div>
-    <img
-      src={product.image}
-      alt={product.title}
-      width="150"
-    />
+  return (
+    <article className="product-card">
+      <Link
+        to={`/product/${product.id}`}
+        className="product-link"
+      >
+        <img src={product.image} alt={product.title} />
 
-    <h3>{product.title}</h3>
+        <h3>{product.title}</h3>
 
-    <p>${product.price}</p>
-    <button
-  onClick={() => addToCart(product)}
->
-  Add To Cart
-</button>
-  </div>
-</Link>
-    );
+        <p>${product.price.toFixed(2)}</p>
+      </Link>
+
+      <button onClick={() => addToCart(product)}>
+        Add To Cart
+      </button>
+    </article>
+  );
 }
 
 export default ProductCard;

@@ -1,73 +1,91 @@
-# React + TypeScript + Vite
+# EC Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+EC Store is a small e-commerce web application built with React, TypeScript, and Vite. The project was created as a practice app to work with product data, routing, cart state, form validation, and a simple checkout flow.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Product catalog loaded from Fake Store API
+- Product search by title
+- Category filtering
+- Price sorting from low to high and high to low
+- Product details page
+- Shopping cart with quantity controls
+- Cart total calculation
+- Login flow with local storage
+- Protected checkout page
+- Checkout form with validation
+- Light and dark theme toggle
+- Responsive layout for desktop and mobile screens
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Vite
+- React Router
+- Zustand
+- TanStack Query
+- React Hook Form
+- CSS
 
-## Expanding the ESLint configuration
+## What I Practiced
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This project helped me practice building a React application with multiple pages and shared state. I focused on connecting API data to the UI, organizing components, working with forms, and keeping the cart and authentication logic separate from the page components.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js
+- npm
+
+### Installation
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run the Project
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### Build
+
+```bash
+npm run build
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## Project Structure
+
+```text
+src/
+  features/
+    products/
+      ui/
+  pages/
+  shared/
+    api/
+    types/
+    ui/
+  store/
+```
+
+## API
+
+The product data is fetched from:
+
+```text
+https://fakestoreapi.com/products
+```
+
+## Notes
+
+This is a learning project, so the authentication and order creation are simplified. Login data is stored locally, and checkout creates a local order number instead of sending the order to a backend server.

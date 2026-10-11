@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 import type { Product } from "../../../shared/types/Product";
@@ -38,7 +37,7 @@ function ProductCard({ product, addToCart }: Props) {
           aria-pressed={isFavorite}
           onClick={() => toggleFavorite(product)}
         >
-          {isFavorite ? "♥" : "♡"}
+          {isFavorite ? "\u2665" : "\u2661"}
         </button>
 
         <button

@@ -17,11 +17,20 @@ type CheckoutForm = {
 function CheckoutPage() {
   const [orderNumber, setOrderNumber] = useState("");
   const cart = useCartStore((state) => state.cart);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   const totalPrice = useMemo(
     () =>
       cart.reduce(
         (total, item) => total + item.price * item.quantity,
+        0
+      ),
+    [cart]
+  );
+  const cartCount = useMemo(
+    () =>
+      cart.reduce(
+        (total, item) => total + item.quantity,
         0
       ),
     [cart]
@@ -50,14 +59,38 @@ function CheckoutPage() {
       .toUpperCase();
     const totalCode = Math.round(totalPrice * 100);
 
-    setOrderNumber(`EC-${customerCode}-${cart.length}${totalCode}`);
+    setOrderNumber(`EC-${customerCode}-${cartCount}${totalCode}`);
     reset();
+    clearCart();
+  }
+
+  if (orderNumber) {
+    return (
+      <>
+      <Header cartCount={0} />
+      <main className="page-shell">
+        <section className="empty-state">
+          <p className="eyebrow">Checkout</p>
+          <h1>Demo order created</h1>
+          <p className="success-message">
+            Order {orderNumber} was created locally for demo purposes.
+          </p>
+          <p className="muted">
+            The cart has been cleared. No order was sent to a real server.
+          </p>
+          <Link className="primary-button" to="/">
+            Continue shopping
+          </Link>
+        </section>
+      </main>
+      </>
+    );
   }
 
   if (cart.length === 0) {
     return (
       <>
-      <Header cartCount={cart.length} />
+      <Header cartCount={cartCount} />
       <main className="page-shell">
         <section className="empty-state">
           <h1>Your cart is empty</h1>
@@ -73,7 +106,7 @@ function CheckoutPage() {
 
   return (
     <>
-    <Header cartCount={cart.length} />
+    <Header cartCount={cartCount} />
     <main className="page-shell checkout-layout">
       <section className="form-panel">
         <Link className="text-link" to="/cart">

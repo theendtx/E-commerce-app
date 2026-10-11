@@ -20,10 +20,14 @@ function CartPage({
     (total, item) => total + item.price * item.quantity,
     0
   );
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
   return (
     <>
-    <Header cartCount={cart.length} />
+    <Header cartCount={cartCount} />
     <main className="page-shell">
       <section className="cart-header">
         <div>

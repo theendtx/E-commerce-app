@@ -42,6 +42,11 @@ function App() {
     removeFromCart
   } = useCartStore();
 
+  const cartCount = cart.reduce(
+  (total, item) => total + item.quantity,
+  0
+);
+
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
@@ -90,7 +95,7 @@ function App() {
             <HomePage
               products={sortedProducts}
               addToCart={addToCart}
-              cartCount={cart.length}
+              cartCount={cartCount}
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               selectedCategory={selectedCategory}

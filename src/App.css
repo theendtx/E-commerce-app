@@ -404,3 +404,27 @@ p {
     grid-template-columns: 1fr;
   }
 }
+
+
+
+.product-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-card-actions > button:last-child {
+  flex: 1;
+}
+
+.favorite-button {
+  min-width: 44px;
+  padding: 8px;
+  font-size: 1.5rem;
+  color: var(--danger);
+}
+
+.favorite-button[aria-pressed="true"] {
+  border-color: var(--danger);
+  background: var(--surface-strong);
+}
